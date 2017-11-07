@@ -8,7 +8,7 @@ npm install
 node server
 ```
 
-## API
+## API Reference
 | Method  | Endpoint            | Usage                                                    | Returns |
 | ------- | ------------------- | -------------------------------------------------------- | ------- |
 | `GET`   | `/api/{id}`         | Get the count                                            | `200`: `{ id, count }` `404`: Count `{id}` doesn't exist `500`: Server error |
