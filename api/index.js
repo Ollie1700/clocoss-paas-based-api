@@ -49,7 +49,7 @@ router.post('/:id', bodyParser.text(), (req, res) => {
         db.query(`SELECT count FROM register WHERE id='${req.params.id}'`, (err, result) => {
             var returnVal = (result[0].count).toString();
             console.log(`POST /api/${req.params.id} => ${returnVal}`);
-            res.send();
+            res.send(returnVal);
         });
     });
 });
