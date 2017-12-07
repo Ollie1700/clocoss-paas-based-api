@@ -66,7 +66,7 @@ router.delete('/:id', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         }
-        res.sendStatus(200);
+        res.sendStatus(204);
     });
 });
 
