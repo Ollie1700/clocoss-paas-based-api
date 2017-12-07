@@ -21,6 +21,9 @@ var db = mysql.createConnection(JSON.parse(dbVars));
 }
 */
 
+// Create the initial database if it doesn't exist
+db.query("CREATE TABLE IF NOT EXISTS register (id VARCHAR(50) PRIMARY KEY, count INTEGER)");
+
 // Routes
 
 // Gets the count based on an ID
