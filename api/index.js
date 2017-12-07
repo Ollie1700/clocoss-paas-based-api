@@ -21,15 +21,7 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
             return;
         }
-        if (result.length == 0) {
-            console.log(`GET /api/${req.params.id} - 404`);
-            res.sendStatus(404);
-            return;
-        }
-        res.json({
-            'id': req.params.id,
-            'count': result[0].count,
-        });
+        res.send(result.length == 0 ? 0 : result[0].count);
     });
 });
 
@@ -43,15 +35,7 @@ router.post('/:id/:count?', (req, res) => {
             return;
         }
         db.query(`SELECT count FROM register WHERE id='${req.params.id}'`, (err, result) => {
-            if (err) {
-                console.log(err);
-                res.sendStatus(404);
-                return;
-            }
-            res.json({
-                'id': req.params.id,
-                'count': result[0].count,
-            });
+            res.send(result[0].count);
         });
     });
 });
@@ -59,15 +43,12 @@ router.post('/:id/:count?', (req, res) => {
 // Resets the register's value to :count or 0 if :count isn't specified
 router.put('/:id/:count?', (req, res) => {
     var count = req.params.count ? req.params.count : 0;
-    db.query(`UPDATE register SET count=${count} WHERE id='${req.params.id}'`, (err, result) => {
+    db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=${count}`, (err, result) => {
         if (err) {
             console.log(err);
             res.sendStatus(500);
         }
-        res.json({
-            'id': req.params.id,
-            'count': count,
-        });
+        res.send(count);
     });
 });
 
@@ -78,7 +59,7 @@ router.delete('/:id', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         }
-        res.sendStatus(204);
+        res.sendStatus(200);
     });
 });
 
