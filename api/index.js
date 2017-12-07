@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 
 // Get DB variables
 var fs = require('fs');
-var dbVars = fs.readFileSync('../db_vars.json');
+var dbVars = fs.readFileSync('db_vars.json');
 
 // Database
 var mysql = require('mysql');

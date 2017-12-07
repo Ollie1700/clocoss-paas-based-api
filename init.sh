@@ -12,19 +12,19 @@ fi
 
 # Install Node
 curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -;
-sudo apt-get -qq install nodejs;
+sudo apt-get install nodejs;
 
 # Create a new cloud SQL instance
-gcloud sql instances create $SQL_NAME --tier=D1 --region=europe-west1;
+gcloud sql instances create $SQL_NAME --tier=D1 --region=europe-west1 -q;
 
 # Create a new user for the new instance
-gcloud sql users create $SQL_NAME-user % --instance=$SQL_NAME --password=root;
+gcloud sql users create $SQL_NAME-user % --instance=$SQL_NAME --password=root -q;
 
 # Assign the instance with an IP
-gcloud sql instances patch $SQL_NAME --assign-ip;
+gcloud sql instances patch $SQL_NAME --assign-ip -q;
 
 # Get the IP of the new instance
-SQL_IP=`gcloud sql instances describe ollie-sql | grep -Pe "(?<=- ipAddress: ).+(?=)" -o`;
+SQL_IP=`gcloud sql instances describe $SQL_NAME | grep -Pe "(?<=- ipAddress: ).+(?=)" -o`;
 
 # Set the database name
 DB_NAME="clocoss"
@@ -36,7 +36,7 @@ echo "{\"host\":\"$SQL_IP\",\"user\":\"$SQL_NAME-user\",\"password\":\"root\",\"
 SERVER_IP=`curl -s -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip"`;
 
 # Add this server's IP to the list of whitelisted networks on the SQL instance
-gcloud sql instances patch $SQL_NAME --authorized-networks=$SERVER_IP;
+gcloud sql instances patch $SQL_NAME --authorized-networks=$SERVER_IP -q;
 
 # Create a new database
 ACCESS_TOKEN="$(gcloud auth application-default print-access-token)"
