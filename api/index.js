@@ -21,7 +21,7 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
             return;
         }
-        res.send(result.length == 0 ? 0 : result[0].count);
+        res.send(result.length == 0 ? '0' : (result[0].count).toString());
     });
 });
 
@@ -35,7 +35,7 @@ router.post('/:id/:count?', (req, res) => {
             return;
         }
         db.query(`SELECT count FROM register WHERE id='${req.params.id}'`, (err, result) => {
-            res.send(result[0].count);
+            res.send((result[0].count).toString());
         });
     });
 });
@@ -48,7 +48,7 @@ router.put('/:id/:count?', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         }
-        res.send(count);
+        res.send(count.toString());
     });
 });
 
