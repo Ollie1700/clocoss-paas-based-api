@@ -28,13 +28,15 @@ router.get('/:id', (req, res) => {
             res.sendStatus(500);
             return;
         }
-        res.send(result.length == 0 ? '0' : (result[0].count).toString());
+        var returnVal = result.length == 0 ? '0' : (result[0].count).toString();
+        console.log(`GET /api/${req.params.id} => ${returnVal}`);
+        res.send(returnVal);
     });
 });
 
 // Creates (or updates if already exists) a register by adding :count to the existing count
 router.post('/:id', (req, res) => {
-    var count = req.body.count ? req.body.count : 0;
+    var count = req.body ? parseInt(req.body) : 0;
     db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=count+${count}`, (err, result) => {
         if (err) {
             console.log(err);
@@ -42,20 +44,24 @@ router.post('/:id', (req, res) => {
             return;
         }
         db.query(`SELECT count FROM register WHERE id='${req.params.id}'`, (err, result) => {
-            res.send((result[0].count).toString());
+            var returnVal = (result[0].count).toString();
+            console.log(`POST /api/${req.params.id} => ${returnVal}`);
+            res.send();
         });
     });
 });
 
 // Resets the register's value to :count or 0 if :count isn't specified
 router.put('/:id', (req, res) => {
-    var count = req.body.count ? req.body.count : 0;
+    var count = req.body ? parseInt(req.body) : 0;
     db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=${count}`, (err, result) => {
         if (err) {
             console.log(err);
             res.sendStatus(500);
         }
-        res.send(count.toString());
+        var returnVal = count.toString();
+        console.log(`PUT /api/${req.params.id} => ${returnVal}`);
+        res.send(returnVal);
     });
 });
 
@@ -66,6 +72,7 @@ router.delete('/:id', (req, res) => {
             console.log(err);
             res.sendStatus(500);
         }
+        console.log(`DELETE /api/${req.params.id} => OK`);
         res.sendStatus(204);
     });
 });
