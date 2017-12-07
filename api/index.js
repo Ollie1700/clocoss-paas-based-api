@@ -33,8 +33,8 @@ router.get('/:id', (req, res) => {
 });
 
 // Creates (or updates if already exists) a register by adding :count to the existing count
-router.post('/:id/:count?', (req, res) => {
-    var count = req.params.count ? req.params.count : 0;
+router.post('/:id', (req, res) => {
+    var count = req.body.count ? req.body.count : 0;
     db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=count+${count}`, (err, result) => {
         if (err) {
             console.log(err);
@@ -48,8 +48,8 @@ router.post('/:id/:count?', (req, res) => {
 });
 
 // Resets the register's value to :count or 0 if :count isn't specified
-router.put('/:id/:count?', (req, res) => {
-    var count = req.params.count ? req.params.count : 0;
+router.put('/:id', (req, res) => {
+    var count = req.body.count ? req.body.count : 0;
     db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=${count}`, (err, result) => {
         if (err) {
             console.log(err);
