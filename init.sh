@@ -10,6 +10,10 @@ then
     exit;
 fi
 
+# Install Node
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -;
+sudo apt-get -qq install nodejs;
+
 # Create a new cloud SQL instance
 gcloud sql instances create $SQL_NAME --tier=D1 --region=europe-west1;
 
