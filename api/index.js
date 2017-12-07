@@ -2,6 +2,9 @@
 var express = require('express');
 var router = express.Router();
 
+// Body Parser
+var bodyParser = require('body-parser');
+
 // Get DB variables
 var fs = require('fs');
 var dbVars = fs.readFileSync('../db_vars.json');
@@ -35,7 +38,7 @@ router.get('/:id', (req, res) => {
 });
 
 // Creates (or updates if already exists) a register by adding :count to the existing count
-router.post('/:id', (req, res) => {
+router.post('/:id', bodyParser.text(), (req, res) => {
     var count = req.body ? parseInt(req.body) : 0;
     db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=count+${count}`, (err, result) => {
         if (err) {
@@ -52,7 +55,7 @@ router.post('/:id', (req, res) => {
 });
 
 // Resets the register's value to :count or 0 if :count isn't specified
-router.put('/:id', (req, res) => {
+router.put('/:id', bodyParser.text(), (req, res) => {
     var count = req.body ? parseInt(req.body) : 0;
     db.query(`INSERT INTO register (id, count) VALUES ('${req.params.id}', ${count}) ON DUPLICATE KEY UPDATE count=${count}`, (err, result) => {
         if (err) {
