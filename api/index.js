@@ -4,7 +4,7 @@ var router = express.Router();
 
 // Get DB variables
 var fs = require('fs');
-var dbVars = fs.readFileSync('../../db_vars.json');
+var dbVars = fs.readFileSync('../db_vars.json');
 
 // Database
 var mysql = require('mysql');
