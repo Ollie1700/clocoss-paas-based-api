@@ -49,4 +49,4 @@ curl --header "Authorization: Bearer ${ACCESS_TOKEN}" \
 npm install;
 
 # Deploy to gcloud
-gcloud app deploy;
+gcloud app deploy -q;

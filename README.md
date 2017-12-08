@@ -4,7 +4,10 @@
 ```
 git clone https://github.com/Ollie1700/clocoss-paas-based-api
 cd clocoss-paas-based-api
-npm install
+bash start.sh SQL_SERVER_NAME
+```
+Then, once installation has complete:
+```
 node server
 ```
 
