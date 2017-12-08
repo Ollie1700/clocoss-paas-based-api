@@ -47,6 +47,3 @@ curl --header "Authorization: Bearer ${ACCESS_TOKEN}" \
 
 # NPM install
 npm install;
-
-# Tell the user we're finished
-echo "Cloud SQL and Node/NPM setup completed. Please run the server with 'node server'";
