@@ -11,6 +11,7 @@
   },
   "devDependencies": {},
   "scripts": {
+    "build": "./start.sh",
     "start": "node server.js"
   },
   "author": "",
