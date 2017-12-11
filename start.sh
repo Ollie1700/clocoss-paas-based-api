@@ -33,7 +33,8 @@ SQL_INSTANCE_NAME=`gcloud sql instances describe $SQL_NAME | grep -Pe "(?<=conne
 DB_NAME="clocoss"
 
 # Generate the yaml file for deployment
-$app_yaml="comruntime: nodejs
+cat > app.yaml <<- EOM
+comruntime: nodejs
 env: flex
 service: clocosspaasbasedapi
 automatic_scaling:
@@ -45,8 +46,8 @@ env_variables:
   SQL_DATABASE: $DB_NAME
   INSTANCE_CONNECTION_NAME: $SQL_INSTANCE_NAME
 beta_settings:
-  cloud_sql_instances: $SQL_INSTANCE_NAME";
-echo "$app_yaml" > app.yaml
+  cloud_sql_instances: $SQL_INSTANCE_NAME
+EOM
 
 # Old code
 # echo "{\"host\":\"$SQL_IP\",\"user\":\"$SQL_NAME-user\",\"password\":\"root\",\"database\":\"$DB_NAME\"}" > db_vars.json;
