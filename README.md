@@ -6,10 +6,12 @@ git clone https://github.com/Ollie1700/clocoss-paas-based-api
 cd clocoss-paas-based-api
 gcloud app deploy
 ```
-Then, once installation has complete:
+Then, once deployment has complete:
 ```
-node server
+gcloud app browse
 ```
+
+Copy and paste the link of your deployed project into your browser to view it.
 
 ## API Reference
 | Method  | Endpoint            | Usage                                                    | Returns |
