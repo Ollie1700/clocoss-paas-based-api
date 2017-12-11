@@ -5,21 +5,14 @@ var router = express.Router();
 // Body Parser
 var bodyParser = require('body-parser');
 
-// Get DB variables
-var fs = require('fs');
-var dbVars = fs.readFileSync('db_vars.json');
-
 // Database
 var mysql = require('mysql');
-var db = mysql.createConnection(JSON.parse(dbVars));
-/*
-{
+var db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'clocoss',
-}
-*/
+    user: process.env.SQL_USER,
+    password: process.env.SQL_PASSWORD,
+    database: process.env.SQL_DB,
+});
 
 // Create the initial database if it doesn't exist
 try {

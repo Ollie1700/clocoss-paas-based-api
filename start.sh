@@ -26,11 +26,31 @@ gcloud sql instances patch $SQL_NAME --assign-ip -q;
 # Get the IP of the new instance
 SQL_IP=`gcloud sql instances describe $SQL_NAME | grep -Pe "(?<=- ipAddress: ).+(?=)" -o`;
 
+# Get the instance name of the new instance
+SQL_INSTANCE_NAME=`gcloud sql instances describe $SQL_NAME | grep -Pe "(?<=connectionName: ).+(?=)" -o`;
+
 # Set the database name
 DB_NAME="clocoss"
 
-# Create the db_vars.json file that our node app requires
-echo "{\"host\":\"$SQL_IP\",\"user\":\"$SQL_NAME-user\",\"password\":\"root\",\"database\":\"$DB_NAME\"}" > db_vars.json;
+# Generate the yaml file for deployment
+$app_yaml="comruntime: nodejs
+env: flex
+service: clocosspaasbasedapi
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 3
+env_variables:
+  SQL_USER: $SQL_NAME-user
+  SQL_PASSWORD: root
+  SQL_DATABASE: $DB_NAME
+  INSTANCE_CONNECTION_NAME: $SQL_INSTANCE_NAME
+beta_settings:
+  cloud_sql_instances: $SQL_INSTANCE_NAME";
+echo "$app_yaml" > app.yaml
+
+# Old code
+# echo "{\"host\":\"$SQL_IP\",\"user\":\"$SQL_NAME-user\",\"password\":\"root\",\"database\":\"$DB_NAME\"}" > db_vars.json;
+# / old code
 
 # Get the IP of this instance
 SERVER_IP=`curl -s -H "Metadata-Flavor: Google" "http://metadata.google.internal/computeMetadata/v1/instance/network-interfaces/0/access-configs/0/external-ip"`;
@@ -45,5 +65,11 @@ curl --header "Authorization: Bearer ${ACCESS_TOKEN}" \
      --data "{\"project\": \"clocoss-2017\", \"instance\": \"$SQL_NAME\", \"name\": \"$DB_NAME\"}" \
      https://www.googleapis.com/sql/v1beta4/projects/clocoss-2017/instances/$SQL_NAME/databases -X POST;
 
-# NPM install
+# NPM export vars and install
+export SQL_USER="$SQL_NAME-user";
+export SQL_PASSWORD="root";
+export SQL_DB="$DB_NAME";
 npm install;
+
+# Deploy
+gcloud app deploy;
