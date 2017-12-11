@@ -8,7 +8,7 @@ var bodyParser = require('body-parser');
 // Database
 var mysql = require('mysql');
 var db = mysql.createConnection({
-    host: '/cloudsql/clocoss-2017:europe-west1:olasfz',
+    socketPath: '/cloudsql/clocoss-2017:europe-west1:olasfz',
     user: 'olasfz-user',
     password: 'root',
     database: 'clocoss',
