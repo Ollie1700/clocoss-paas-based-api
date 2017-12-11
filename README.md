@@ -8,7 +8,7 @@ gcloud app deploy
 ```
 Then, once deployment has complete:
 ```
-gcloud app browse
+gcloud app browse -s clocosspaasbasedapi --project=clocoss-2017
 ```
 
 Copy and paste the link of your deployed project into your browser to view it.
