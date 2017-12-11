@@ -15,7 +15,7 @@ curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -;
 sudo apt-get install nodejs;
 
 # Create a new cloud SQL instance
-gcloud sql instances create $SQL_NAME --tier=D1 --region=europe-west1 -q;
+gcloud sql instances create $SQL_NAME --tier=db-n1-standard-2 --region=europe-west1 -q;
 
 # Create a new user for the new instance
 gcloud sql users create $SQL_NAME-user % --instance=$SQL_NAME --password=root -q;
