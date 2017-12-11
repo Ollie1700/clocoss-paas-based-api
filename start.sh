@@ -73,4 +73,4 @@ export SQL_DB="$DB_NAME";
 npm install;
 
 # Deploy
-gcloud app deploy;
+gcloud app deploy -q;
