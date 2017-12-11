@@ -9,9 +9,9 @@ var bodyParser = require('body-parser');
 var mysql = require('mysql');
 var db = mysql.createConnection({
     host: 'localhost',
-    user: process.env.SQL_USER,
-    password: process.env.SQL_PASSWORD,
-    database: process.env.SQL_DB,
+    user: 'olasfz-user',
+    password: 'root',
+    database: 'clocoss',
 });
 
 // Create the initial database if it doesn't exist

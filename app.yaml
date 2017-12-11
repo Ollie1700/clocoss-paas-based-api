@@ -1,0 +1,13 @@
+runtime: nodejs
+env: flex
+service: clocosspaasbasedapi
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 3
+env_variables:
+  SQL_USER: olasfz-user
+  SQL_PASSWORD: root
+  SQL_DATABASE: clocoss
+  INSTANCE_CONNECTION_NAME: clocoss-2017:europe-west1:olasfz
+beta_settings:
+  cloud_sql_instances: clocoss-2017:europe-west1:olasfz
