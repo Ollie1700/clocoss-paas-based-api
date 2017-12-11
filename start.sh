@@ -34,7 +34,7 @@ DB_NAME="clocoss"
 
 # Generate the yaml file for deployment
 cat > app.yaml <<- EOM
-comruntime: nodejs
+runtime: nodejs
 env: flex
 service: clocosspaasbasedapi
 automatic_scaling:
