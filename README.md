@@ -4,7 +4,7 @@
 ```
 git clone https://github.com/Ollie1700/clocoss-paas-based-api
 cd clocoss-paas-based-api
-bash start.sh SQL_SERVER_NAME
+gcloud app deploy
 ```
 Then, once installation has complete:
 ```
